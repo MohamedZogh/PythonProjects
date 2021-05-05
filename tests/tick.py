@@ -1,22 +1,21 @@
 import aiohttp
 import asyncio
 from rich import print
-from datetime import datetime
-import yaml
 
 async def main():
 
     async with aiohttp.ClientSession() as session:
-        async with session.get('http://51.15.17.205:9000/tick/') as response:
 
-            # print("Status:", response.status)
-            # print("Content-type:", response.headers['content-type'])
+        async with session.get('http://localhost:9000/tick/') as resp:
 
-            html = await response.text()
-            json = await response.json()
+            info = await resp.json()
+#             info['timestamp'] = datetime.timestamp(datetime.now())
+#             data = yaml.dump(info)
+#             filename = f"./tick/data/{datetime.now().isoformat()}.yaml"
+#             with open(filename, "w") as f:
+#                 f.write(data)
+            print(info)
 
-            # print("Body:", html[:15], "...")
-            print(json)
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
